@@ -17,8 +17,8 @@ namespace HipercoreASPNETCORE.Models
             try
             {
                 //------user secrets
-                string _origen = "d3m0gon@gmail.com";
-                string _pass = "1@Qwertyuiop0";
+                string _origen = "correo@gmail.com";
+                string _pass = "password";
                 //----------
                 string _destino = Destino;
                 string _cuerpoHTML = CuerpoHTML;
