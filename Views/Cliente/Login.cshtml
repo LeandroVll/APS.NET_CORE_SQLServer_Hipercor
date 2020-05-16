@@ -1,0 +1,150 @@
+﻿
+@model Credenciales
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+<style>
+    .login-container {
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    .login-form-1 {
+        padding: 5%;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    }
+
+        .login-form-1 h3 {
+            text-align: center;
+            color: #333;
+        }
+
+    .login-form-2 {
+        padding: 5%;
+        background: #0062cc;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    }
+
+        .login-form-2 h3 {
+            text-align: center;
+            color: #fff;
+        }
+
+    .login-container form {
+        padding: 10%;
+    }
+
+    .btnSubmit {
+        width: 50%;
+        border-radius: 1rem;
+        padding: 1.5%;
+        border: none;
+        cursor: pointer;
+    }
+
+    .login-form-1 .btnSubmit {
+        font-weight: 600;
+        color: #fff;
+        background-color: #0062cc;
+    }
+
+    .login-form-2 .btnSubmit {
+        font-weight: 600;
+        color: #0062cc;
+        background-color: #fff;
+    }
+
+    .login-form-2 .ForgetPwd {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-form-1 .ForgetPwd {
+        color: #0062cc;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .glyphicons {
+        top: 1px;
+        display: inline-block;
+        font-family: glyphicons Halflings;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1px;
+    }
+</style>
+
+<body>
+
+    <div class="container login-container" style="position:inherit">
+        <div class="row">
+            <div class="col-md-6 login-form-1" style="position:inherit; height:446.2px;">
+                <h3>IDENTIFICACIÓN</h3>
+                @using (Html.BeginForm("Login", "Cliente", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        @Html.Label("Email")
+                        @Html.TextBoxFor(model => model.Email, "", new { @class = "form-control", @placeholder = "Introduce Email" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                        <p style="color:red;">@ViewBag.Mensaje</p>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Password")
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Introduce Password" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                        @Html.Hidden("RePassword",1234567)
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btnSubmit">
+                            <span style="color:white; " class="glyphicons glyphicon-ok" aria-hidden="true">
+                                ACCEDER
+                            </span>
+                        </button>
+                    </div>
+
+
+                    <div class="form-group">
+                        <a href="@Url.Action("SolicitarContraseña", "Home")" class="ForgetPwd">Olvide la Contraseña</a>
+                    </div>
+                }
+
+
+
+            </div>
+            <div class="col-md-6 login-form-2" style="position:inherit; height:446.2px;">
+                <h3 style="margin-bottom:2em;">NUEVO CLIENTE</h3>
+
+                <div class="ForgetPwd" style="margin-bottom:2em;">
+                    Si desea crear una ficha de cliente pulse en continuar
+                </div>
+
+                <br />
+                <br />
+
+                <button type="button" class="btnSubmit" style="margin: 0 auto;" onclick="location.href='@Url.Action("Registro","Home")'">
+                    <span style="color:blue;" class="glyphicon glyphicon-pencil">
+                        CONTINUAR
+                    </span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+
+

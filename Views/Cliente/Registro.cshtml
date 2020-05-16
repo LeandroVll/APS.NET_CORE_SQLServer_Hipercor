@@ -1,0 +1,137 @@
+﻿@model Cliente
+
+@{
+    ViewData["Title"] = "Registro";
+
+}
+
+
+
+<h2>Registro</h2>
+<br />
+
+<form asp-action="Registro">
+    <legend style="font-size:14px; color:green">DATOS DE ACCESO</legend>
+    <div class="row">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label >CORREO ELECTRONICO *</label>                
+                <input asp-for="@Model.CredencialesAcceso.Email" type="text" class="form-control" id="Email" placeholder="...Direccion de email...">
+                <span asp-validation-for="@Model.CredencialesAcceso.Email" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>CONTRASEÑA *</label>
+                <input asp-for="@Model.CredencialesAcceso.Password" type="password" class="form-control" placeholder="...Minimo de 6 caracteres...">
+                <span asp-validation-for="@Model.CredencialesAcceso.Password" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:33%; float:left; min-height:1px; padding-right:15px; padding-left: 15px;">
+            <div class="form-group">
+
+                <p style="font-style:italic; font-size: .8em; color:#666666; "> Te enviaremos un correo electrónico para validar que tu dirección sea correcta </p>
+            </div>
+
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label >CONFIRMA TU CONTRASEÑA *</label>
+                <input asp-for="@Model.CredencialesAcceso.RePassword" type="password" class="form-control" id="repassword"  placeholder="...confirmar contraseña...">
+                <span asp-validation-for="@Model.CredencialesAcceso.RePassword" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <br />
+
+
+    <div class="row">
+
+        <legend style="font-size:14px; color:green">DATOS PERSONALES</legend>
+
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label >NOMBRE *</label>
+                <input asp-for="@Model.Nombre" type="text" class="form-control" id="Nombre" placeholder="...tu Nombre...">
+                <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label >PRIMER APELLIDO *</label>
+                <input  asp-for="@Model.PrimerApellido" type="text" class="form-control" id="PrimerApellido" placeholder="...tu primer apellido...">
+                <span asp-validation-for="@Model.PrimerApellido" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label >SEGUNO APELLIDO</label>
+                <input asp-for="@Model.SegundoApellido" type="text" class="form-control" id="SegundoApellido" placeholder="...tu segundo apellido...">
+                <span asp-validation-for="@Model.SegundoApellido" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4" style="margin-top:20px;"></div>
+
+        <div class="col-md-4" style="margin-top:50px;">
+
+            <button type="submit" style="width:80%;" class="btn btn-success">
+                <span style="color:white" class="glyphicon glyphicon-ok">
+                    REGISTRAR
+                </span>
+            </button>
+            <br />
+        </div>
+
+
+    </div>
+</form>
+
