@@ -13,5 +13,5 @@ namespace HipercoreASPNETCORE.Models
         public Decimal PrecioProducto  { get; set; }
         public String  DescripcionProducto { get; set; }
         public String  Imagen { get; set; }
-}
+    }
 }

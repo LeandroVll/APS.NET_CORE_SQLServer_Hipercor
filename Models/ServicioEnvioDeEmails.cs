@@ -1,4 +1,5 @@
 ﻿using HipercoreASPNETCORE.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,23 @@ namespace HipercoreASPNETCORE.Models
 {
     public class ServicioEnvioDeEmails : IServicioEnvioEmail
     {
+        private IConfiguration _configuracion;
+        public ServicioEnvioDeEmails(IConfiguration configuration)
+        {
+            this._configuracion = configuration;
+
+        }
+       // public static string GetEnvironmentVariable(string EMAILORIGEN);
         public bool EnvioDeEmail(string Destino, string Asunto, string CuerpoHTML)
         {
+             
             //aqui escribo el codigo q envia emails
 
             try
             {
                 //------user secrets
-                string _origen = "correo@gmail.com";
-                string _pass = "password";
+                string _origen=_configuracion["EMAILORIGEN"];
+                string _pass=_configuracion["EMAILPASSWORD"];
                 //----------
                 string _destino = Destino;
                 string _cuerpoHTML = CuerpoHTML;
