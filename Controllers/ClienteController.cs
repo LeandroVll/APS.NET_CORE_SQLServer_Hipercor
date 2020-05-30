@@ -12,11 +12,13 @@ using HipercoreASPNETCORE.Interfaces;
 using HipercoreASPNETCORE.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
 
 namespace HipercoreASPNETCORE.Controllers
@@ -94,7 +96,7 @@ namespace HipercoreASPNETCORE.Controllers
                     Boolean _envioEmaiOK = this._enviarEmail.EnvioDeEmail(_destino,_asunto,_cuerpoHTML); //llamo al sevicio envioemail
                     if (_envioEmaiOK)
                     {
-
+                        //si la cuenta esta activa devuelve la vista
                         return View("Login");
                     }
                     else 
@@ -128,33 +130,73 @@ namespace HipercoreASPNETCORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(Credenciales _credemcialesRegistro)
+        public IActionResult Login(Credenciales _credencialesRegistro)
         {
 
             if (!ModelState.IsValid)
             {
-                return View(_credemcialesRegistro);
+                return View(_credencialesRegistro);
             }
             else 
             {
                 //comprobar q existe en la BD un cleinte con estas credenciales
-                Boolean _resultadoLogin = this._accesoBD.ComprobarCredenciales(_credemcialesRegistro.Email, _credemcialesRegistro.Password);
+                Boolean _resultadoLogin = this._accesoBD.ComprobarCredenciales(_credencialesRegistro.Email, _credencialesRegistro.Password);
                 if (_resultadoLogin)
                 {
+
                     //aqui se llama al metodo contructor de tokens y devuelve el token al navegador
-                    //como lo devuelvo en el return justo con la vista??
-                    var oToken= BuildToken(_credemcialesRegistro);
-                    return View("Tienda");
+                    // var oToken= BuildToken(_credemcialesRegistro); //como lo devuelvo en el return junto con la vista un obj anonimmo??
+
+                    //------------------------creo obj sesssion-------------
+                    //si la cuenta esta activa devuelve la vista panel de usuario (parte Tienda)
+                    Boolean _cuentaActiva = this._accesoBD.ComprobarCuentaActiva(_credencialesRegistro.Email);
+                    if(_cuentaActiva)
+                    {
+                        //----cargo en un obj cliente las direcciones y los pedidos para pasarselo al panel de usuario
+                        // con session asi lo reconoce y puede operar 
+                        //instacio el obj cliente
+                        Cliente cliente = new Cliente();
+                        cliente.CredencialesAcceso = _credencialesRegistro; //<---asocio las credenciales al obj cleinte
+                        cliente = this._accesoBD.DevolverCliente(cliente); // le paso el obj cliente y que devuelva susu datos de dbo.Cliente
+                        cliente = this._accesoBD.CargarListaDireciones(cliente);  //recibo el Array<direcciones>
+                        //creo un obj session del usuario
+                         HttpContext.Session.SetString("sesionCliente", JsonConvert.SerializeObject(cliente));
+
+                        List<Pedido> carrito = new List<Pedido>(); //array q guarda los obj newPedido
+                        //creo un obj session del pedido del usuario ..
+                        HttpContext.Session.SetString("sesionCarrito", JsonConvert.SerializeObject(carrito));
+
+                        return RedirectToAction("PaneldeUsuario");
+                    }
+                   
                 }
                 else 
                 {
                     ModelState.AddModelError("", ".....Password o Email invalidos....");
-                    return View(_credemcialesRegistro);
+                    return View(_credencialesRegistro);
                 }
-
+                return View("errorCredenciales");
             }
 
         }
+
+        //-------------------------------------------------------------------------------------------------------------
+        [HttpGet]
+        public IActionResult PaneldeUsuario()
+        {
+            var _sessionCliente = JsonConvert.DeserializeObject<Cliente>(HttpContext.Session.GetString("sesionCliente"));
+            Cliente cliente = this._accesoBD.DevolverCliente(_sessionCliente);
+            return View(cliente);
+
+        }
+        [HttpPost]
+        public IActionResult PaneldeUsuario(string nose)
+        {
+
+            return View("");
+
+        }
+
 
 
         //----------------------------------------------- Metodo para Activar Cuenta ----------------------------------
@@ -183,8 +225,26 @@ namespace HipercoreASPNETCORE.Controllers
         }
 
 
-        //----------------------------------------------- Metodo de creacion de JWT ---------------------------------------
+        //-----------------------------MODIFICA LOS DATOS DE ACCESO -------------------------------------------
 
+        public IActionResult DatosAcceso()
+        {
+            return View("DatosAcceso");
+        
+        }
+
+        //---------------------------------------MODIFICA LA INFO PERSONAL------------------------------------------
+
+        public IActionResult InformacionPersonal()
+        {
+            return View("InformacionPersonal");
+
+        }
+
+
+
+        //----------------------------------------------- Metodo de creacion de JWT ---------------------------------------
+        //no lo utilizo, creo sesiones porque no puedo devolver un obj annonimo en el login
         private UserToken BuildToken(Credenciales credenciales)
         {
             var Claims = new[] //<---array de identificadores del jwt
