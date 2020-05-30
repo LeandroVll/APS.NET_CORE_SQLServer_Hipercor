@@ -1,0 +1,58 @@
+﻿@model List<Producto>
+@{
+    ViewData["Title"] = "Tienda";
+}
+
+<h1>Tienda</h1>
+
+<body>
+
+    <div class="container login-container" style="position:inherit">
+        @foreach (Producto item in Model)
+        {
+            <div class="row">
+
+                <div class="card mb-3">
+                    <a asp-action="DetalleProducto" asp-route-id="@item.idProducto">
+                        <img class="card-img-top" src="@item.Imagen">
+                    </a>
+                    <div class="card-body">
+                        <a asp-action="DetalleProducto" asp-route-id="@item.idProducto">
+                            <h5 class="card-title">@item.NombreProducto</h5>
+                        </a>
+
+                        <p class="card-text">@item.DescripcionProducto</p>
+                        <p class="card-text"><small class="text-muted">@item.PrecioProducto</small></p>
+                        <a asp-controller="Tienda"
+                           asp-action="AgregaraCarrito"
+                           asp-route-idProducto="@item.idProducto" class="btn btn-primary btn-lg btn-block">Añadir al carrito</a>
+                    </div>
+                </div>
+
+
+            </div>
+        }
+    <div class="row">
+            <div class="card mb-3">
+                <a asp-controller="Tienda"
+                   asp-action="GuardarPedido"
+                   class="btn btn-primary btn-lg btn-block">
+                    GESTIONAR PEDIDO
+                </a>
+            </div>
+            <div class="card mb-3">
+                <a
+                   href="@Url.Action("PaneldeUsuario", "Cliente")"
+                   class="btn btn-primary btn-lg btn-block">
+                    PANEL DE USUARIO
+                </a>
+            </div>
+    </div>
+
+    </div>
+
+</body>
+
+
+
+

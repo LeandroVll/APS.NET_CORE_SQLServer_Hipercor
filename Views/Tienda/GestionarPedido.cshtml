@@ -1,0 +1,107 @@
+﻿@model Escaparate
+@{
+    ViewData["Title"] = "GestionarPedido";
+}
+
+<h1>MIS PEDIDOS</h1>
+
+<body>
+    <div class="container login-container" style="position:inherit">
+      
+        @foreach (Pedido item in @Model.ListDatosPedido)
+        {
+
+            <div class="row">
+
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        FECHA DE COMRPA:  <h5 class="card-title">@item.FechaPedido</h5>
+
+
+                        <!--AQUI VA EL BUCLE DEL DICCIONARIO-->
+                        @foreach (var unproducto in item.ListaElementosPedidos)
+                        {
+                            <div class="row">
+
+                               
+                                    <div class="card-group">
+                                        <div class="card">
+                                            <!-- <img src="Url.Content(item2.Imagen)" class="card-img-top" alt="...">-->
+                                            <div class="card-body">
+                                                
+                                                <h5 class="card-title"> @unproducto.Value Ud</h5>
+                                                @foreach (var esteproducto in Model.ListaDatosProducto)
+                                                {
+                                                    @if (esteproducto.idProducto.Equals(unproducto.Key))
+                                                    {
+                                                        <a asp-action="DetalleProducto" asp-route-idProducto="@unproducto.Key" >
+                                                            <img src=@esteproducto.Imagen class="rounded float-right" width="60" height="60">
+                                                            <h5>@esteproducto.NombreProducto</h5>
+                                                        </a>
+
+                                                        <div class="row">
+
+                                                            <a asp-controller="Tienda"
+                                                               asp-action="ModificarCantidad"
+                                                               asp-route-idProducto="@esteproducto.idProducto" 
+                                                               asp-route-idPedido="@item.idPedido"
+                                                               class="btn btn-primary btn-sm">AGREGAR PRODUCTO</a>
+
+                                                            <a asp-controller="Tienda"
+                                                               asp-action="EliminarProductoPedido"
+                                                               asp-route-idPedido="@item.idPedido"
+                                                               asp-route-idProducto="@esteproducto.idProducto" class="btn btn-primary btn-sm">QUITAR PRODUCTO</a>
+
+                                                        </div>
+                                                        break;
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+
+
+                         }
+
+
+                        <p class="card-text">ESTADO DEL PEDIDO: @item.EstadoPedido</p>
+                        <p class="card-text">TIPO DE ENVIO: @item.TipoGastosEnvio</p>
+                        <p class="card-text">SUBTOTAL: @item.SubTotalPedido</p>
+                        <p class="card-text">TOTAL: @item.TotalPedido</p>
+                        <div class="card mb-3">
+                            <div class="row">
+                                <a asp-controller="Tienda"
+                                   asp-action="CancelarPedido"
+                                   asp-route-idPedido="@item.idPedido" class="btn btn-primary btn-lg btn-block">CANCELAR ESTE PEDIDO</a>
+
+                                <a asp-controller="Tienda"
+                                   asp-action="ConfirmarCompra"
+                                   asp-route-idPedido="@item.idPedido"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    CONFIRMAR COMPRA
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         }
+        <div class="row">
+            <div class="card mb-3">
+                <a href="@Url.Action("PaneldeUsuario", "Cliente")"
+                   class="btn btn-primary btn-lg btn-block">
+                    PANEL DE USUARIO
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+

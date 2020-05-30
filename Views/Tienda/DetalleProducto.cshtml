@@ -1,0 +1,25 @@
+﻿@model Producto
+@{
+    ViewData["Title"] = "DetalleProducto";
+}
+
+<h1>DetalleProducto</h1>
+
+<div class="row">
+
+    <div class="col-md-8">
+        <img class="img-fluid" src=@Model.Imagen alt="IMAGEN">
+    </div>
+
+    <div class="col-md-4">
+        <h3 class="my-3">DESCRIPCION DEL PRODUCTO</h3>
+        <p>@Model.DescripcionProducto</p>
+        <h3 class="my-3">DETALLES</h3>
+        <ul>
+            <li>@Model.CategoriaProducto</li>
+            <li>@Model.NombreProducto €</li>
+            <li>@Model.PrecioProducto ud</li>
+        </ul>
+    </div>
+
+</div>

@@ -1,0 +1,189 @@
+﻿
+@model Direccion
+
+@{
+    ViewData["Title"] = "FormDireccion";
+}
+
+@{
+    ViewBag.Title = "Datos de envio";
+}
+
+
+<h2>REGISTRO DE DIRECCIÓN</h2>
+<br />
+
+<form asp-action="DatosDeEnvio">
+    <legend style="font-size:14px; color:green">Los campos con * son obligatorios</legend>
+    <div class="row">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Tipo de via *</label>
+                <input asp-for="@Model.TipoVia" type="text" class="form-control" id="TipoVia" placeholder="...tipo de via...">
+                <span asp-validation-for="@Model.TipoVia" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Nombre de la via *</label>
+                <input asp-for="@Model.NombreVia" type="text" id="NombreVia" class="form-control" placeholder="...Nombre de la via...">
+                <span asp-validation-for="@Model.NombreVia" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%; float:left; min-height:1px; padding-right:15px; padding-left: 15px;">
+            <div class="form-group">
+                <label>Código Postal *</label>
+                <input asp-for="@Model.Localidad.CodPo" type="text" class="form-control" id="CP" placeholder="...CP...">
+                <span asp-validation-for="@Model.Localidad.CodPo" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%; float:right; min-height:1px; padding-right:15px; padding-left: 15px;">
+            <div class="form-group">
+                <label>Código Municipio </label>
+                <input asp-for="@Model.Localidad.CodMuni" type="text" class="form-control" id="CodMuni" placeholder="...Código Municipio...">
+                <span asp-validation-for="@Model.Localidad.CodMuni" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%; float:left; min-height:1px; padding-right:15px; padding-left: 15px;">
+            <div class="form-group">
+                <label>Nombre Municipio *</label>
+                <input asp-for="@Model.Localidad.NomMunicipio" type="text" class="form-control" id="NomMunicipio" placeholder="...Nombre Municipio...">
+                <span asp-validation-for="@Model.Localidad.NomMunicipio" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:right;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Código de Provincia </label>
+                <input asp-for="@Model.Provincia.CodProv" type="text" class="form-control" id="CodPro" placeholder="...CodPro...">
+                <span asp-validation-for="@Model.Provincia.CodProv" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+        <div style="width:25%;float:right;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>NomProvincia *</label>
+                <input asp-for="@Model.Provincia.NomProvincia" type="text" class="form-control" id="NomProvincia" placeholder="...NomProvincia...">
+                <span asp-validation-for="@Model.Provincia.NomProvincia" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+        <div style="width:25%;float:right;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Edificio *</label>
+                <input asp-for="@Model.Edificio" type="text" class="form-control" id="Edificio" placeholder="...Edificio...">
+                <span asp-validation-for="@Model.Edificio" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Escalera </label>
+                <input asp-for="@Model.Escalera" type="text" class="form-control" id="Escalera" placeholder="...Escalera...">
+                <span asp-validation-for="@Model.Escalera" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:right;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Piso *</label>
+                <input asp-for="@Model.Piso" type="text" class="form-control" id="Piso" placeholder="...Piso...">
+                <span asp-validation-for="@Model.Piso" class="text-danger"></span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div style="width:25%;float:left;min-height:1px;padding-right:15px; padding-left:15px;">
+            <div class="form-group">
+                <label>Puerta *</label>
+                <input asp-for="@Model.Puerta" type="text" class="form-control" id="SegundoApellido" placeholder="...Puerta...">
+                <span asp-validation-for="@Model.Puerta" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4" style="margin-top:20px;"></div>
+
+        <div class="col-md-4" style="margin-top:50px;">
+
+            <button type="submit" style="width:80%;" class="btn btn-success">
+                <span style="color:white" class="glyphicon glyphicon-ok">
+                    REGISTRAR DIRECCION
+                </span>
+            </button>
+            <br />
+        </div>
+
+
+    </div>
+</form>
+
